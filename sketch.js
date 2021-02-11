@@ -27,6 +27,15 @@ function draw() {
       theProjectiles[i].display();
     }
   }
+
+  // collison window detection
+
+  if (playerx < 0) {
+    playerx = playerx + 15;
+  }
+  if (playerx > width) {
+    playerx = playerx - 15;
+  }
 }
 
 function displayPlayer() {
