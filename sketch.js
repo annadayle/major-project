@@ -5,31 +5,32 @@ let playerx;
 let playery;
 let squareSize = 50;
 let playerdx = 7.5;
+let screen = 0;
+
 
 function setup() {
   let myCanvas = createCanvas(windowWidth*0.8, windowHeight*0.8);
   myCanvas.position(windowWidth*0.1, windowHeight*0.1);
   playerx = width/2;
   playery = height/2;
-  window.setInterval(spawnProjectile, 1000);
+  window.setInterval(spawnProjectile, 1500);
 }
 
 function draw() {
+  if (screen === 0) {
+    startScreen();
+  }
+  else {
   background(220);
   displayPlayer();
   movePlayer();
   for (i=theProjectiles.length-1; i>=0; i--) {
-    if (theProjectiles[i].isDead) {
-      theProjectiles.splice(i, 1);
-    }
-    else {
+    if (theProjectiles[i].isAlive) {
       theProjectiles[i].move();
       theProjectiles[i].display();
     }
   }
-
   // collison window detection
-
   if (playerx < 0) {
     playerx = playerx + 15;
   }
@@ -37,10 +38,25 @@ function draw() {
     playerx = playerx - 15;
   }
 }
+}
+
+function startScreen() {
+  background(150);
+  fill(255);
+  textAlign(CENTER);
+  text("Some Platformer Thing", width/2, height/2);
+  text("Click on the screen to start", width/2, height/2 + 30);
+}
+
+function mousePressed() {
+  if (screen === 0) {
+    screen = screen + 1;
+  }
+}
 
 function displayPlayer() {
   fill("blue");
-  square(playerx, playery, squareSize);
+  rect(playerx, playery, squareSize, squareSize);
 }
 
 function movePlayer() {
@@ -65,16 +81,11 @@ class Projectile {
     this.theColor = "red";
     this.radius = 20;
     this.isAlive = true;
-    this.isDead = false;
   }
   
   move() {
-    if (this.y -= this.radius > 0) {
+    if (this.isAlive) {
       this.y += this.dy;
-    }
-    else if (this.isAlive) {
-      this.isAlive = false;
-      this.isDead = true;
     }
   }
 
@@ -84,4 +95,5 @@ class Projectile {
       ellipse(this.x, this.y, this.radius*2, this.radius*2);
     }
   }
+
 }
