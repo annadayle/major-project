@@ -6,13 +6,20 @@ let playery;
 let squareSize = 50;
 let playerdx = 7.5;
 let screen = 0;
-
+let groundX;
+let groundY;
+let groundWidth;
+let groundHeight;
 
 function setup() {
   let myCanvas = createCanvas(windowWidth*0.8, windowHeight*0.8);
   myCanvas.position(windowWidth*0.1, windowHeight*0.1);
-  playerx = width/2;
-  playery = height/2;
+  playerx = width*0.8;
+  playery = height*0.65;
+  groundX = width*0.8;
+  groundY = height*0.95;
+  groundWidth = width*2;
+  groundHeight = height/2;
   window.setInterval(spawnProjectile, 1500);
 }
 
@@ -22,6 +29,7 @@ function draw() {
   }
   else {
   background(220);
+  displayGround();
   displayPlayer();
   movePlayer();
   for (i=theProjectiles.length-1; i>=0; i--) {
@@ -57,6 +65,12 @@ function mousePressed() {
 function displayPlayer() {
   fill("blue");
   rect(playerx, playery, squareSize, squareSize);
+}
+
+function displayGround() {
+  rectMode(CENTER);
+  fill("brown");
+  rect(groundX, groundY, groundWidth, groundHeight);
 }
 
 function movePlayer() {
