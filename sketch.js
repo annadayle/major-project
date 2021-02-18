@@ -36,6 +36,10 @@ function draw() {
     if (theProjectiles[i].isAlive) {
       theProjectiles[i].move();
       theProjectiles[i].display();
+      theProjectiles[i].dead();
+    }
+    else {
+      theProjectiles.splice(i, 1);
     }
   }
   // collison window detection
@@ -107,6 +111,12 @@ class Projectile {
     if (this.isAlive) {
       fill(this.theColor);
       ellipse(this.x, this.y, this.radius*2, this.radius*2);
+    }
+  }
+
+  dead() {
+    if (this.y + this.radius >= groundHeight*1.5) {
+      this.isAlive = false;
     }
   }
 
