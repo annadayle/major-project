@@ -10,6 +10,11 @@ let groundX;
 let groundY;
 let groundWidth;
 let groundHeight;
+let projImg;
+
+function preload() {
+  projImg = loadImage("assets/apple.png");
+}
 
 function setup() {
   let myCanvas = createCanvas(windowWidth*0.8, windowHeight*0.8);
