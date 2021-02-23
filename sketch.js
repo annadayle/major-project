@@ -3,8 +3,9 @@
 let theProjectiles = [];
 let playerx;
 let playery;
-let squareSize = 50;
-let playerdx = 7.5;
+let playerWidSize = 50;
+let playerHeiSize = 50;
+let playerdx = 9.5;
 let screen = 0;
 let groundX;
 let groundY;
@@ -73,7 +74,7 @@ function mousePressed() {
 
 function displayPlayer() {
   fill("blue");
-  rect(playerx, playery, squareSize, squareSize);
+  rect(playerx, playery, playerWidSize, playerHeiSize);
 }
 
 function displayGround() {
@@ -124,5 +125,4 @@ class Projectile {
       this.isAlive = false;
     }
   }
-
 }
