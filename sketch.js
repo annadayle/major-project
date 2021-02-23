@@ -11,9 +11,11 @@ let groundY;
 let groundWidth;
 let groundHeight;
 let projImg;
+let bgImg;
 
 function preload() {
   projImg = loadImage("assets/apple.png");
+  bgImg = loadImage("assets/bg.png");
 }
 
 function setup() {
@@ -33,7 +35,7 @@ function draw() {
     startScreen();
   }
   else {
-  background(220);
+  background(bgImg);
   displayGround();
   displayPlayer();
   movePlayer();
