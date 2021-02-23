@@ -12,10 +12,12 @@ let groundWidth;
 let groundHeight;
 let projImg;
 let bgImg;
+let titleScreen;
 
 function preload() {
   projImg = loadImage("assets/apple.png");
   bgImg = loadImage("assets/bg.png");
+  titleScreen = loadImage("assets/titleScr.PNG");
 }
 
 function setup() {
@@ -60,11 +62,7 @@ function draw() {
 }
 
 function startScreen() {
-  background(150);
-  fill(255);
-  textAlign(CENTER);
-  text("Some Platformer Thing", width/2, height/2);
-  text("Click on the screen to start", width/2, height/2 + 30);
+  background(titleScreen);
 }
 
 function mousePressed() {
