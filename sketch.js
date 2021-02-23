@@ -14,6 +14,7 @@ let groundHeight;
 let projImg;
 let bgImg;
 let titleScreen;
+let score = 0;
 
 function preload() {
   projImg = loadImage("assets/apple.png");
@@ -41,12 +42,17 @@ function draw() {
   background(bgImg);
   displayGround();
   displayPlayer();
+  displayScore();
   movePlayer();
   for (i=theProjectiles.length-1; i>=0; i--) {
     if (theProjectiles[i].isAlive) {
       theProjectiles[i].move();
       theProjectiles[i].display();
       theProjectiles[i].dead();
+      if (collideRectCircle(playerx, playery, playerWidSize, playerHeiSize, theProjectiles[i].x, theProjectiles[i].y, theProjectiles[i].radius)) {
+        score = score + 1;
+        theProjectiles[i].isAlive = false;
+      }
     }
     else {
       theProjectiles.splice(i, 1);
@@ -67,6 +73,7 @@ function startScreen() {
 }
 
 function mousePressed() {
+  console.log(playerx, playery);
   if (screen === 0) {
     screen = screen + 1;
   }
@@ -79,8 +86,25 @@ function displayPlayer() {
 
 function displayGround() {
   rectMode(CENTER);
-  fill("brown");
+  if (score <= 4) {
+    fill("pink");
+  }
+  else if (score >= 5 && score < 10) {
+    fill("green");
+  }
+  else if (score >= 10 && score < 15) {
+    fill("orange");
+  }
+  else if (score === 15) {
+    score = 0;
+  }
   rect(groundX, groundY, groundWidth, groundHeight);
+}
+
+function displayScore() {
+  textAlign(CENTER);
+  fill("black");
+  text("Score: " + score, width/12, height/12);
 }
 
 function movePlayer() {
@@ -102,8 +126,7 @@ class Projectile {
     this.x = random(width);
     this.y = height - 800;
     this.dy = 5;
-    this.theColor = "red";
-    this.radius = 20;
+    this.radius = 30;
     this.isAlive = true;
   }
   
@@ -115,8 +138,7 @@ class Projectile {
 
   display() {
     if (this.isAlive) {
-      fill(this.theColor);
-      ellipse(this.x, this.y, this.radius*2, this.radius*2);
+      image(projImg, this.x, this.y, this.radius*2, this.radius*2);
     }
   }
 
