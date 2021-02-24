@@ -49,7 +49,7 @@ function draw() {
       theProjectiles[i].move();
       theProjectiles[i].display();
       theProjectiles[i].dead();
-      if (collideRectCircle(playerx, playery, playerWidSize, playerHeiSize, theProjectiles[i].x, theProjectiles[i].y, theProjectiles[i].radius)) {
+      if (collideRectRect(playerx, playery, playerWidSize, playerHeiSize, theProjectiles[i].x, theProjectiles[i].y, theProjectiles[i].radius, theProjectiles[i].radius)) {
         score = score + 1;
         theProjectiles[i].isAlive = false;
       }
@@ -86,6 +86,7 @@ function displayPlayer() {
 
 function displayGround() {
   rectMode(CENTER);
+  noStroke();
   if (score <= 4) {
     fill("pink");
   }
@@ -126,7 +127,7 @@ class Projectile {
     this.x = random(width);
     this.y = height - 800;
     this.dy = 5;
-    this.radius = 30;
+    this.radius = 60;
     this.isAlive = true;
   }
   
@@ -138,7 +139,7 @@ class Projectile {
 
   display() {
     if (this.isAlive) {
-      image(projImg, this.x, this.y, this.radius*2, this.radius*2);
+      image(projImg, this.x, this.y, this.radius, this.radius);
     }
   }
 
