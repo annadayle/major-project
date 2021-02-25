@@ -13,13 +13,19 @@ let groundWidth;
 let groundHeight;
 let projImg;
 let bgImg;
+let playImg;
 let titleScreen;
 let score = 0;
+let playButtonX;
+let playButtonY;
+let pixelFont;
 
 function preload() {
   projImg = loadImage("assets/apple.png");
-  bgImg = loadImage("assets/bg.png");
+  bgImg = loadImage("assets/newBg.png");
   titleScreen = loadImage("assets/titleScr.PNG");
+  playImg = loadImage("assets/playbutton.png");
+  pixelFont = loadFont("assets/pixelText.ttf");
 }
 
 function setup() {
@@ -31,14 +37,17 @@ function setup() {
   groundY = height*0.95;
   groundWidth = width*2;
   groundHeight = height/2;
+  playButtonX = width*0.75;
+  playButtonY = height*0.25;
   window.setInterval(spawnProjectile, 1500);
 }
 
 function draw() {
   if (screen === 0) {
     startScreen();
+    displayPlayButton();
   }
-  else {
+  else if (screen === 1 && score < 20){
   background(bgImg);
   displayGround();
   displayPlayer();
@@ -66,6 +75,11 @@ function draw() {
     playerx = playerx - 15;
   }
 }
+else if (screen === 1 && score === 20) {
+  background(bgImg);
+  displayWin();
+  displayPlayButton();
+}
 }
 
 function startScreen() {
@@ -74,9 +88,16 @@ function startScreen() {
 
 function mousePressed() {
   console.log(playerx, playery);
-  if (screen === 0) {
+  if (screen === 0 && mouseX > playButtonX && mouseX < playButtonX * 250 && mouseY > playButtonY && mouseY < playButtonY * 100) {
     screen = screen + 1;
   }
+  else if (screen === 1 && score === 20 && mouseX > playButtonX && mouseX < playButtonX * 250 && mouseY > playButtonY && mouseY < playButtonY * 100) {
+    score = 0;
+  }
+}
+
+function displayPlayButton() {
+  image(playImg, playButtonX, playButtonY, 250, 100);
 }
 
 function displayPlayer() {
@@ -87,28 +108,20 @@ function displayPlayer() {
 function displayGround() {
   rectMode(CENTER);
   noStroke();
-  if (score <= 4) {
-    fill("pink");
-  }
-  else if (score >= 5 && score < 10) {
-    fill("green");
-  }
-  else if (score >= 10 && score < 15) {
-    fill("orange");
-  }
-  else if (score === 15) {
-    score = 0;
-  }
+  fill("DarkGreen");
   rect(groundX, groundY, groundWidth, groundHeight);
 }
 
 function displayScore() {
+  textFont(pixelFont);
   textAlign(CENTER);
-  fill("black");
+  fill("white");
   text("Score: " + score, width/12, height/12);
+  text("Use right and left arrow keys to move", width/7, height/9);
 }
 
 function movePlayer() {
+ if (score < 20) {
   if (keyIsDown(LEFT_ARROW)) {
     playerx -= playerdx;
   }
@@ -116,10 +129,20 @@ function movePlayer() {
     playerx += playerdx;
   }
 }
+}
+
+function displayWin() {
+  textFont(pixelFont);
+  textAlign(CENTER);
+  fill("white");
+  text("You won! Click to play again", width/7, height/9);
+}
 
 function spawnProjectile() {
+if (score < 20){ 
   let someProjectile = new Projectile();
   theProjectiles.push(someProjectile);
+}
 }
 
 class Projectile {
