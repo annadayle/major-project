@@ -19,6 +19,7 @@ let score = 0;
 let playButtonX;
 let playButtonY;
 let pixelFont;
+let lives = 3;
 
 function preload() {
   projImg = loadImage("assets/apple.png");
@@ -47,7 +48,7 @@ function draw() {
     startScreen();
     displayPlayButton();
   }
-  else if (screen === 1 && score < 20){
+  else if (screen === 1 && score < 20 && lives != 0){
   background(bgImg);
   displayGround();
   displayPlayer();
@@ -80,6 +81,12 @@ else if (screen === 1 && score === 20) {
   displayWin();
   displayPlayButton();
 }
+
+else if (screen === 1 && lives === 0) {
+  background(bgImg);
+  displayLoose();
+  displayPlayButton();
+}
 }
 
 function startScreen() {
@@ -93,6 +100,11 @@ function mousePressed() {
   }
   else if (screen === 1 && score === 20 && mouseX > playButtonX && mouseX < playButtonX * 250 && mouseY > playButtonY && mouseY < playButtonY * 100) {
     score = 0;
+    lives = 3;
+  }
+  else if (screen === 1 && score < 20 && lives === 0 && mouseX > playButtonX && mouseX < playButtonX * 250 && mouseY > playButtonY && mouseY < playButtonY * 100) {
+    score = 0;
+    lives = 3;
   }
 }
 
@@ -117,7 +129,8 @@ function displayScore() {
   textAlign(CENTER);
   fill("white");
   text("Score: " + score, width/12, height/12);
-  text("Use right and left arrow keys to move", width/7, height/9);
+  text("Lives: " + lives, width/12, height/9);
+  text("Use right and left arrow keys to move", width/5, height/6);
 }
 
 function movePlayer() {
@@ -128,6 +141,9 @@ function movePlayer() {
   if (keyIsDown(RIGHT_ARROW)) {
     playerx += playerdx;
   }
+  if (keyIsDown(UP_ARROW)) { //cheat code, lets you get 20 apples (aka the winning score) automatically by pressing the up arrow
+    score = 20;
+  }
 }
 }
 
@@ -136,6 +152,13 @@ function displayWin() {
   textAlign(CENTER);
   fill("white");
   text("You won! Click to play again", width/7, height/9);
+}
+
+function displayLoose() {
+  textFont(pixelFont);
+  textAlign(CENTER);
+  fill("white");
+  text("You lost, click to play again", width/7, height/9);
 }
 
 function spawnProjectile() {
@@ -168,6 +191,7 @@ class Projectile {
 
   dead() {
     if (this.y + this.radius >= groundHeight*1.5) {
+      lives = lives - 1;
       this.isAlive = false;
     }
   }
