@@ -14,6 +14,8 @@ let groundHeight;
 let projImg;
 let bgImg;
 let playImg;
+let basketImg;
+let groundImg;
 let titleScreen;
 let score = 0;
 let playButtonX;
@@ -26,6 +28,8 @@ function preload() {
   bgImg = loadImage("assets/newBg.png");
   titleScreen = loadImage("assets/titleScr.PNG");
   playImg = loadImage("assets/playbutton.png");
+  basketImg = loadImage("assets/basket.PNG");
+  groundImg = loadImage("assets/grass.PNG");
   pixelFont = loadFont("assets/pixelText.ttf");
 }
 
@@ -114,13 +118,13 @@ function displayPlayButton() {
 
 function displayPlayer() {
   fill("blue");
-  rect(playerx, playery, playerWidSize, playerHeiSize);
+  image(basketImg, playerx, playery, playerWidSize, playerHeiSize);
 }
 
 function displayGround() {
   rectMode(CENTER);
   noStroke();
-  fill("DarkGreen");
+  fill("orange");
   rect(groundX, groundY, groundWidth, groundHeight);
 }
 
