@@ -21,9 +21,9 @@ let score = 0;
 let playButtonX;
 let playButtonY;
 let pixelFont;
-let lives = 3;
+let lives = 5;
 
-function preload() {
+function preload() { // preloading assets (images, fonts, and music)
   projImg = loadImage("assets/apple.png");
   bgImg = loadImage("assets/newBg.png");
   titleScreen = loadImage("assets/titleScr.PNG");
@@ -48,28 +48,28 @@ function setup() {
 }
 
 function draw() {
-  if (screen === 0) {
+  if (screen === 0) { // shows the start screen 
     startScreen();
     displayPlayButton();
   }
-  else if (screen === 1 && score < 20 && lives != 0){
+  else if (screen === 1 && score < 20 && lives != 0){ 
   background(bgImg);
   displayGround();
   displayPlayer();
   displayScore();
   movePlayer();
-  for (i=theProjectiles.length-1; i>=0; i--) {
+  for (i=theProjectiles.length-1; i>=0; i--) { // calls the projectiles(the apples) to drop
     if (theProjectiles[i].isAlive) {
       theProjectiles[i].move();
       theProjectiles[i].display();
       theProjectiles[i].dead();
-      if (collideRectRect(playerx, playery, playerWidSize, playerHeiSize, theProjectiles[i].x, theProjectiles[i].y, theProjectiles[i].radius, theProjectiles[i].radius)) {
+      if (collideRectRect(playerx, playery, playerWidSize, playerHeiSize, theProjectiles[i].x, theProjectiles[i].y, theProjectiles[i].radius, theProjectiles[i].radius)) { // checks if an apple has been caufght by the player
         score = score + 1;
         theProjectiles[i].isAlive = false;
       }
     }
     else {
-      theProjectiles.splice(i, 1);
+      theProjectiles.splice(i, 1); // I used splicing to prevent the game from lagging (basically it gets rid of any apples in the array that have fallen to the ground or that have been caught)
     }
   }
   // collison window detection
@@ -80,13 +80,13 @@ function draw() {
     playerx = playerx - 15;
   }
 }
-else if (screen === 1 && score === 20) {
+else if (screen === 1 && score === 20) { // displays winning screen 
   background(bgImg);
   displayWin();
   displayPlayButton();
 }
 
-else if (screen === 1 && lives === 0) {
+else if (screen === 1 && lives === 0) { // displays loosing screen
   background(bgImg);
   displayLoose();
   displayPlayButton();
@@ -97,18 +97,18 @@ function startScreen() {
   background(titleScreen);
 }
 
-function mousePressed() {
+function mousePressed() { 
   console.log(playerx, playery);
   if (screen === 0 && mouseX > playButtonX && mouseX < playButtonX * 250 && mouseY > playButtonY && mouseY < playButtonY * 100) {
     screen = screen + 1;
   }
   else if (screen === 1 && score === 20 && mouseX > playButtonX && mouseX < playButtonX * 250 && mouseY > playButtonY && mouseY < playButtonY * 100) {
     score = 0;
-    lives = 3;
+    lives = 5;
   }
   else if (screen === 1 && score < 20 && lives === 0 && mouseX > playButtonX && mouseX < playButtonX * 250 && mouseY > playButtonY && mouseY < playButtonY * 100) {
     score = 0;
-    lives = 3;
+    lives = 5;
   }
 }
 
@@ -166,7 +166,7 @@ function displayLoose() {
 }
 
 function spawnProjectile() {
-if (score < 20){ 
+if (score < 20 && lives != 0 && screen != 0){ 
   let someProjectile = new Projectile();
   theProjectiles.push(someProjectile);
 }
@@ -194,7 +194,7 @@ class Projectile {
   }
 
   dead() {
-    if (this.y + this.radius >= groundHeight*1.5) {
+    if (this.y + this.radius >= groundHeight*1.5) { // checks to see if an apple has hit the ground or not
       lives = lives - 1;
       this.isAlive = false;
     }

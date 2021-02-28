@@ -1,5 +1,5 @@
 # Proposal
-I want to build some sort of mini platformer involving arrays. It would not be a sidescroller exactly, but it would involve the player being able to interact with extra objects and be able to gain points by jumping or shooting at enemies.
+I want to build some sort of mini platformer involving arrays. It would not be a sidescroller exactly, but it would involve the player being able to interact with extra objects and be able to gain points by interacting wuth them.
 
 ## Needs to have
 - Use of graphics for the player, background, and any other assets 
@@ -11,4 +11,4 @@ I want to build some sort of mini platformer involving arrays. It would not be a
 ## Nice to have
 - Some nice background music (I can't compose music at all so it will have to be free to use music from the internet)
 - Have some graphics be made from scratch (custom designs, textures, etc)
-- Have multiple platforms to choose from
+- A life system
