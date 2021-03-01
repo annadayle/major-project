@@ -1,4 +1,5 @@
-// final project oh man here we go boys
+// Apple Catch
+// Use right and left arrow keys to move your basket and collect as many falling apples as you can. Try not to let 5 apples fall to the ground, or you will have to restart. Collect 20 apples to win.
 
 let theProjectiles = [];
 let playerx;
@@ -165,7 +166,7 @@ function displayLoose() {
   text("You lost, click to play again", width/7, height/9);
 }
 
-function spawnProjectile() {
+function spawnProjectile() { // spawns apples
 if (score < 20 && lives != 0 && screen != 0){ 
   let someProjectile = new Projectile();
   theProjectiles.push(someProjectile);
