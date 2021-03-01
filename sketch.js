@@ -1,3 +1,7 @@
+// Anna Haight
+// Final Project
+// Comp Sci 30, March 1st 2021
+
 // Apple Catch
 // Use right and left arrow keys to move your basket and collect as many falling apples as you can. Try not to let 5 apples fall to the ground, or you will have to restart. Collect 20 apples to win.
 
